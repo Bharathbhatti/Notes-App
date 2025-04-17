@@ -17,11 +17,12 @@ const { authenticateToken } = require("./utilities");
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  credentials: true, 
+};
+
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   return res.send("Backend is running!");
