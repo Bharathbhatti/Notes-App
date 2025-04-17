@@ -17,15 +17,21 @@ const { authenticateToken } = require("./utilities");
 
 app.use(express.json());
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, 
-};
+const allowedOrigins = [process.env.FRONTEND_URL];
 
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("Blocked by CORS:", origin); // helpful log
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // if you're sending cookies or auth headers
+  })
+);
 
 app.get("/", (req, res) => {
   return res.send("Backend is running!");
