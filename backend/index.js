@@ -24,7 +24,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.json({ data: "Hello World!" });
+  return res.send("Backend is running!");
 });
 
 //create account
