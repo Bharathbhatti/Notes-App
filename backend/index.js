@@ -22,16 +22,22 @@ const allowedOrigins = [process.env.FRONTEND_URL];
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow requests with no origin (like Postman) or matching allowed origin
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.log("Blocked by CORS:", origin); // helpful log
+        console.log("Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // if you're sending cookies or auth headers
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+
+
+
 
 app.get("/", (req, res) => {
   return res.send("Backend is running!");
