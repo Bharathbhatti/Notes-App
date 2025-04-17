@@ -22,6 +22,7 @@ const allowedOrigins = [process.env.FRONTEND_URL];
 app.use(
   cors({
     origin: function (origin, callback) {
+      console.log("Request Origin:", origin);
       // Allow requests with no origin (like Postman) or matching allowed origin
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
