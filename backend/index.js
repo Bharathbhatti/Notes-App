@@ -23,7 +23,6 @@ app.use(
   cors({
     origin: function (origin, callback) {
       console.log("Request Origin:", origin);
-      // Allow requests with no origin (like Postman) or matching allowed origin
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -34,6 +33,7 @@ app.use(
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    preflightContinue: true, // Handle pre-flight requests
   })
 );
 
