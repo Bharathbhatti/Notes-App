@@ -21,11 +21,7 @@ const allowedOrigins = [process.env.FRONTEND_URL];
 
 app.use(
   cors({
-    origin: true,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    preflightContinue: true, // Handle pre-flight requests
+    origin:'https://notes-app-87fe.vercel.app', 
   })
 );
 
