@@ -21,7 +21,11 @@ const allowedOrigins = [process.env.FRONTEND_URL];
 
 app.use(
   cors({
-    origin:'https://notes-app-87fe.vercel.app', 
+    origin:'https://notes-app-87fe.vercel.app',
+    allowedHeaders:{
+      "Content-Type": "application/json",
+      Authorization
+    } 
   })
 );
 
