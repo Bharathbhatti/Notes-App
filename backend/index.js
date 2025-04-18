@@ -18,16 +18,14 @@ const { authenticateToken } = require("./utilities");
 app.use(express.json());
 
 
-const allowedOrigins = ['https://notes-app-87fe.vercel.app'];
+const allowedOrigins = [process.env.FRONTEND_URL];
 
 const corsOptions = {
   origin: allowedOrigins,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
-app.options(/.*/, cors(corsOptions));
+
 
 
 app.get("/", (req, res) => {

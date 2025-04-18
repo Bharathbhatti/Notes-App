@@ -125,16 +125,21 @@ const Home = () => {
   const updatePinned = async (noteData) => {
     const noteId = noteData._id;
     const newPinnedStatus = !noteData.isPinned;
-  
+
     try {
-      const response = await axiosInstance.put(`/update-note-Pinned/${noteId}`, {
-        isPinned: newPinnedStatus,
-      });
-  
+      const response = await axiosInstance.put(
+        `/update-note-Pinned/${noteId}`,
+        {
+          isPinned: newPinnedStatus,
+        }
+      );
+
       if (response.data && response.data.note) {
         showToastMessage({
-          message: newPinnedStatus ? "Note pinned successfully" : "Note unpinned successfully",
-          type: "update", 
+          message: newPinnedStatus
+            ? "Note pinned successfully"
+            : "Note unpinned successfully",
+          type: "update",
         });
         getAllNotes();
       }
@@ -142,7 +147,6 @@ const Home = () => {
       console.error(error);
     }
   };
-  
 
   const handleClearSearch = () => {
     setisSearch(false);
@@ -163,10 +167,10 @@ const Home = () => {
         handleClearSearch={handleClearSearch}
       />
 
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {allNotes.length > 0 ? (
-          <div className="grid grid-cols-3 gap-4 mt-8 ml-10 mr-10">
-            {allNotes.map((item, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+            {allNotes.map((item) => (
               <NoteCard
                 key={item._id}
                 title={item.title}
@@ -193,16 +197,16 @@ const Home = () => {
       </div>
 
       <button
-        className="w-16 h-16 flex items-center justify-center rounded-2xl bg-blue-400 hover:bg-blue-600 absolute right-10 bottom-10 cursor-pointer"
-        onClick={() => {
+        className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-600 fixed right-6 bottom-6 sm:right-10 sm:bottom-10 shadow-lg transition-all"
+        onClick={() =>
           setopenAddEditModal({
             isShown: true,
             type: "add",
             data: null,
-          });
-        }}
+          })
+        }
       >
-        <MdAdd className="text-[32px] text-white" />
+        <MdAdd className="text-3xl text-white" />
       </button>
 
       <Modal
@@ -211,21 +215,22 @@ const Home = () => {
         style={{
           overlay: {
             backgroundColor: "rgba(0,0,0,0.2)",
+            zIndex: 50,
           },
         }}
         contentLabel=""
-        className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-scroll"
+        className="max-w-full sm:max-w-xl md:max-w-2xl bg-white rounded-md mx-auto mt-14 p-4 sm:p-6 overflow-auto max-h-[90vh] shadow-lg"
       >
         <AddEditNotes
           type={openAddEditModal.type}
           noteData={openAddEditModal.data}
-          onClose={() => {
+          onClose={() =>
             setopenAddEditModal({
               isShown: false,
               type: "add",
               data: null,
-            });
-          }}
+            })
+          }
           getAllNotes={getAllNotes}
           showToastMessage={showToastMessage}
         />
