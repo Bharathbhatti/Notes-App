@@ -5,6 +5,8 @@ const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
   headers: {
+    "Access Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": true,
     "Content-Type": "application/json",
   },
   withCredentials: true,  
