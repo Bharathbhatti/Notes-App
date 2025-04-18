@@ -17,16 +17,18 @@ const { authenticateToken } = require("./utilities");
 
 app.use(express.json());
 
-app.use(express.static('dist'));
 
 const allowedOrigins = ['https://notes-app-87fe.vercel.app'];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true, 
-  })
-);
+const corsOptions = {
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
+
 
 app.get("/", (req, res) => {
   return res.send("Backend is running!");
