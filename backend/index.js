@@ -17,15 +17,25 @@ const { authenticateToken } = require("./utilities");
 
 app.use(express.json());
 
+app.use(express.static('dist'));
+
 const allowedOrigins = [process.env.FRONTEND_URL];
 
 app.use(
   cors({
-    origin:allowedOrigins || "*",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed"));
+      }
+    },
     credentials: true,
-    optionsSuccessStatus: 200, 
+    allowedHeaders: ["Content-Type", "Authorization"], 
   })
 );
+
+
 
 
 
