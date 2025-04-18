@@ -19,26 +19,14 @@ app.use(express.json());
 
 app.use(express.static('dist'));
 
-const allowedOrigins = [process.env.FRONTEND_URL];
+const allowedOrigins = ['https://notes-app-87fe.vercel.app'];
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS not allowed"));
-      }
-    },
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"], 
+    origin: allowedOrigins,
+    credentials: true, 
   })
 );
-
-
-
-
-
 
 app.get("/", (req, res) => {
   return res.send("Backend is running!");
